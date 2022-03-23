@@ -1,0 +1,15 @@
+#!/bin/bash
+DWN=100%
+echo "Enter Valid Class C IP Address"
+read IP
+if [[ $IP =~ ^(19[2-9]|2[0-1][0-9]|22[0-3])(\.([0-9]|[0-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$ ]]
+then echo "IP Is A Valid Class C IP Address...Commencing Scan"
+ping -q -c 1 $IP > IPSHEET
+PL=$(awk '/received/ {print $6}' IPSHEET)
+if [ "$PL" = "$DWN" ]
+then echo "$IP is down"
+else echo "$IP is up"
+fi
+else echo "That IP Was Not A Valid Class C IP....Try Harder"
+exit
+fi
